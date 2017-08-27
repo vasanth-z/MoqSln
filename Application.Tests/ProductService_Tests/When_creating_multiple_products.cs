@@ -60,5 +60,47 @@ namespace Application.Tests.ProductService_Tests
         //    mockProductRepository.Verify(p => p.Save(It.IsAny<Product>()), Times.Exactly(productViewModels.Count));
 
         //}
+
+
+
+        [Test]
+        public void Then_each_product_should_receive_a_unique_id__INPUT_VARY()
+        {
+            //Arrange
+            List<ProductViewModel> productViewModels = new List<ProductViewModel>()    {
+        new ProductViewModel(){Name = "ProductA", Description="Great product"}
+        , new ProductViewModel(){Name = "ProductB", Description="Bad product"}
+        , new ProductViewModel(){Name = "ProductC", Description="Cheap product"}
+        , new ProductViewModel(){Name = "ProductD", Description="Expensive product"}   };
+
+            int productId = 1;
+            var prod_iden = new ProductIdentifier() { RawValue = productId };
+
+            var mockProductRepository = new Mock<IProductRepository>();
+            var mockIdBuilder = new Mock<IProductIdBuilder>();
+
+            mockIdBuilder.Setup(i => i.BuildProductIdentifier("ProductA"))
+                .Returns(new ProductIdentifier() { RawValue = 11 });
+
+            mockIdBuilder.Setup(i => i.BuildProductIdentifier("ProductB"))
+              .Returns(new ProductIdentifier() { RawValue = 12 });
+
+            mockIdBuilder.Setup(i => i.BuildProductIdentifier("ProductC"))
+               .Returns(new ProductIdentifier() { RawValue = 20 });
+
+            mockIdBuilder.Setup(i => i.BuildProductIdentifier("ProductD"))
+              .Returns(new ProductIdentifier() { RawValue = 124 });
+
+            //mockIdBuilder.Setup(i => i.BuildProductIdentifier())
+            //.Returns(new ProductIdentifier() { RawValue = 14 });
+
+            ProductService productService = new ProductService(mockProductRepository.Object, mockIdBuilder.Object);
+            //Act
+            productService.CreateMany(productViewModels);
+
+            //Assert
+            mockProductRepository.Verify(p => p.Save(It.IsAny<Product>()), Times.AtLeastOnce());
+        }
+
     }
 }

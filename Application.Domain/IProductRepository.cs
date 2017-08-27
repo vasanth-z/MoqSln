@@ -8,5 +8,6 @@
     public interface IProductIdBuilder
     {
         ProductIdentifier BuildProductIdentifier();
+        ProductIdentifier BuildProductIdentifier(string input);
     }
 }

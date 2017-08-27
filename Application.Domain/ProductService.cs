@@ -34,8 +34,10 @@ namespace Application.Domain
             foreach (ProductViewModel vm in productViewModels)
             {
                 Product newProduct = new Product(vm.Name, vm.Description);
-                newProduct.Identifier = _productIdBuilder.BuildProductIdentifier();
 
+                ProductIdentifier prodiden = _productIdBuilder.BuildProductIdentifier(newProduct.Name.ToString());
+
+                newProduct.Identifier = prodiden;
                 int ii = newProduct.Identifier.RawValue;
 
                 string str = "";
