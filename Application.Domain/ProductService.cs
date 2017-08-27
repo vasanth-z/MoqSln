@@ -16,7 +16,9 @@ namespace Application.Domain
         public void Create(ProductViewModel productViewModel)
         {
             Product product = ConvertToDomain(productViewModel);
-            product.Identifier = _productIdBuilder.BuildProductIdentifier();
+
+            product.Identifier = _productIdBuilder.BuildProductIdentifier(product.Name);
+
             if (product.Identifier == null)
             {
                 throw new InvalidProductIdException();

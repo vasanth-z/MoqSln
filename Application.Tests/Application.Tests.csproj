@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProductService_Tests\When_creating_a_gold_status_customer.cs" />
     <Compile Include="ProductService_Tests\When_creating_a_product.cs" />
     <Compile Include="ProductService_Tests\When_creating_multiple_products.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
