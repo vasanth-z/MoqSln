@@ -31,9 +31,12 @@ namespace Application.Tests.ProductService_Tests
 
             Mock<IProductRepository> mockProductRepository = new Mock<IProductRepository>();
             Mock<IProductIdBuilder> mockIdBuilder = new Mock<IProductIdBuilder>();
-            mockIdBuilder.Setup(i => i.BuildProductIdentifier()).Returns(new ProductIdentifier());
-            ProductService productService = new ProductService(mockProductRepository.Object
-                , mockIdBuilder.Object);
+
+            mockIdBuilder
+                .Setup(i => i.BuildProductIdentifier())
+                .Returns(new ProductIdentifier());
+
+            ProductService productService = new ProductService(mockProductRepository.Object, mockIdBuilder.Object);
 
             //Act
             productService.Create(productViewModel);
